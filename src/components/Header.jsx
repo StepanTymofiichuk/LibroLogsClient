@@ -14,7 +14,7 @@ const Header = () => {
   const logoutHandler = async () => {
     try {
       dispatch(logout());
-      navigate('/login');
+      navigate('/');
     } catch (err) {
       console.error(err);
     }
@@ -25,7 +25,7 @@ const Header = () => {
       <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
         <Container>
           <LinkContainer to='/'>
-            <Navbar.Brand>MERN App</Navbar.Brand>
+            <Navbar.Brand>LibroLogsClient</Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
