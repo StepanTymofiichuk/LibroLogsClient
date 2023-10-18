@@ -28,7 +28,7 @@ const DashboardScreen = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      const res = { _id: Math.floor(Math.random() * 21), title, genre, pages,bookProgress, bookType };
+      const res = { _id: Math.floor(Math.random() * 21), title, genre, pages, bookProgress, bookType, status: "New" };
       dispatch(addBook({ ...res }));
       toast.success("Success!");
     } catch (error) {

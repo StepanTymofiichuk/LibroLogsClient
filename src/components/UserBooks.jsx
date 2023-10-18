@@ -8,6 +8,7 @@ import Modal from 'react-bootstrap/Modal';
 import { toast } from "react-toastify";
 import ReadingProgress from './ReadingProgress';
 import { AiOutlineEdit, AiOutlineClose, AiOutlineBook, AiOutlineMobile } from "react-icons/ai";
+import Badge from 'react-bootstrap/Badge';
 
 const UserBooks = () => {
 
@@ -20,6 +21,7 @@ const UserBooks = () => {
   const [bookpages, setBBookPages] = useState(0);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleClose = () => setShow(false);
   const handleShow = ( index ) => {
@@ -28,6 +30,7 @@ const UserBooks = () => {
   };
 
   const { userBooks } = useSelector((state) => state.books);
+  const { userGoals } = useSelector((state) => state.goals);
 
   const BookType = ({ type }) => {
     if (type === "paper") {
@@ -47,13 +50,27 @@ const UserBooks = () => {
   }
 
   const submitHandler = () => {
+    let status;
+    let readingProgress = bookProgress - prevProgress;
+    let progress = bookProgress / bookpages * 100;
+    switch (true) {
+      case progress == 100:
+        status = "Completed";
+        break;
+      case progress < 99:
+        status = "In Progress";
+        break;
+    }
+     console.log(status);
     try {
-      dispatch(updateBook({ bookIndex, bookProgress }));
+      dispatch(updateBook({ bookIndex, bookProgress, status }));
       toast.success("Success!");
     } catch (error) {
       
     }
   }
+
+  const userBookPage = (book) => navigate("/books/" + book._id, { state: { _id: book._id, title: book.title, pages: book.pages, status: book.status }});
   return (
     <>
       <p className='books-qty'>Currently you have {userBooks.length} books</p>
@@ -73,7 +90,7 @@ const UserBooks = () => {
           {
            userBooks.length !== 0 ? userBooks.map((book, index) => (
               <tr key={book._id} className='book-row'>
-                <td>{book.title}</td>
+                <td style={{cursor: "pointer"}} onClick={() => (userBookPage(book))}>{book.title} {book.status === "New" && <Badge bg='success' pill>{book.status}</Badge>}</td>
                 <td>{book.genre}</td>
                 <td>{book.pages}</td>
                 <td><ReadingProgress progress={book.bookProgress / book.pages * 100} /></td>

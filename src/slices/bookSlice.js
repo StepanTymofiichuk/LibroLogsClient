@@ -44,9 +44,11 @@ const bookSlice = createSlice({
         },
         updateBook: (state, action) => {
             const book = action.payload.bookIndex;
-            const bookProgress = action.payload.bookProgress
+            const bookProgress = action.payload.bookProgress;
+            const status = action.payload.status;
             // console.log(book);
             state.userBooks[book].bookProgress = bookProgress;
+            state.userBooks[book].status = status;
         },
         clearBooksData: (state) => {
             state.userBooks = null,
