@@ -7,6 +7,7 @@ import Modal from 'react-bootstrap/Modal';
 import FormContainer from '../components/FormContainer';
 import UserBooks from '../components/UserBooks';
 import { AiOutlinePlus } from 'react-icons/ai';
+import { v4 as uuidv4 } from 'uuid';
 
 const DashboardScreen = () => {
 
@@ -28,7 +29,7 @@ const DashboardScreen = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      const res = { _id: Math.floor(Math.random() * 21), title, genre, pages, bookProgress, bookType, status: "New" };
+      const res = { _id: userBooks.length + 1, title, genre, pages, bookProgress, bookType, status: "New" };
       dispatch(addBook({ ...res }));
       toast.success("Success!");
     } catch (error) {

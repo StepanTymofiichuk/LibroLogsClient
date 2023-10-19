@@ -21,7 +21,7 @@ const UserBookScreen = () => {
                     </Breadcrumb>
                 </div>
                 <h1>{location.state.title}</h1>
-                <BookGoals _id={location.state._id} userGoals={location.state.userGoals} />
+                <BookGoals _id={location.state._id} />
             </Container>
         </>
     )
