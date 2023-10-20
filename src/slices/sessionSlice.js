@@ -6,7 +6,17 @@ const initialState = {
         progress: 224,
         status: "Completed",
         bookId: 1,
-        userId: 1
+        userId: 1,
+        createdAt: "2023-10-20",
+        updatedAt: "2023-10-20",
+    }, {
+        _id: 2,
+        progress: 150,
+        status: "In Progress",
+        bookId: 2,
+        userId: 1,
+        createdAt: "2023-10-25",
+        updatedAt: "2023-10-25",
     }]
 }
 

@@ -17,14 +17,16 @@ const BookGoals = ({ _id }) => {
   const [editGoalId, setEditGoalId] = useState(0);
   const [editGoalTitle, setEditGoalTitle] = useState("");
   const [goalDeadline, setGoalDeadline] = useState("");
+  const [goalDeadlineTime, setGoalDeadlineTime] = useState("");
   const [editGDeadline, setEditGoalDeadline] = useState("");
+  const [editGDeadlineTime, setEditGoalDeadlineTime] = useState("");
   const [goalCompleted, setGoalCompleted] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const handleCloseEditGoalModal = () => setShowEditGoalModal(false);
-  const handleShowEditGoalModal = (_id, title, deadline) => {
+  const handleShowEditGoalModal = (_id, title, deadline, deadlineTime) => {
     setShowEditGoalModal(true);
     console.log(title);
     console.log(deadline);
@@ -32,6 +34,7 @@ const BookGoals = ({ _id }) => {
     setEditGoalId(_id);
     setEditGoalTitle(title);
     setEditGoalDeadline(deadline);
+    setEditGoalDeadlineTime(deadlineTime);
   }
 
   const dispatch = useDispatch();
@@ -62,10 +65,11 @@ const BookGoals = ({ _id }) => {
 
   const goalSubmitHandler = () => {
     try {
-      dispatch(addGoal({ _id: userGoals.length + 1, title: goalTitle, goalDeadline, isCompleted: goalCompleted, bookId: _id }));
+      dispatch(addGoal({ _id: userGoals.length + 1, title: goalTitle, goalDeadline, goalDeadlineTime, isCompleted: goalCompleted, bookId: _id }));
       toast.success("Created");
       setGoalTitle("");
       setGoalDeadline("");
+      setGoalDeadlineTime("");
       setGoalCompleted(false);
     } catch (err) {
       console.log(err);
@@ -75,10 +79,11 @@ const BookGoals = ({ _id }) => {
 
   const editGoalSubmitHandler = () => {
     try {
-      dispatch(updateOldGoal({ goalIndex: editGoalId - 1, title: editGoalTitle, goalDeadline: editGDeadline }));
+      dispatch(updateOldGoal({ goalIndex: editGoalId - 1, title: editGoalTitle, goalDeadline: editGDeadline, goalDeadlineTime: editGDeadlineTime }));
       toast.success("Updated");
       setEditGoalTitle("");
       setEditGoalDeadline("");
+      setEditGoalDeadlineTime("");
     } catch (err) {
       console.log(err);
       toast.error(err);
@@ -96,13 +101,13 @@ const BookGoals = ({ _id }) => {
             <Card key={goal._id} style={{ width: '18rem', display: "flex", justifyContent: "center", flexGrow: "1", textAlign: "center", marginRight: "8px", marginBottom: "8px" }}>
               <Card.Body>
                 <Card.Title style={{ wordBreak: "normal" }} className="mb-3">{goal.title}</Card.Title>
-                <h6>Deadline: {goal.goalDeadline}</h6>
+                <h6>Deadline: {goal.goalDeadline} {goal.goalDeadlineTime}</h6>
                 <h6>isCompleted: {goal.isCompleted.toString()}</h6>
                 {
                   goal.isCompleted === false ? <Button variant="link" style={{ color: "green" }} onClick={() => (goalStatusHandler(goal._id, index))}><AiOutlineCheck /></Button> : null
                 }
                 {
-                  goal.isCompleted === false ? <Button variant="link" style={{ color: "purple" }} onClick={() => (handleShowEditGoalModal(goal._id, goal.title, goal.goalDeadline))}><AiOutlineEdit /></Button> : null
+                  goal.isCompleted === false ? <Button variant="link" style={{ color: "purple" }} onClick={() => (handleShowEditGoalModal(goal._id, goal.title, goal.goalDeadline, goal.goalDeadlineTime))}><AiOutlineEdit /></Button> : null
                 }
                 <Button variant="link" size="sm" style={{ color: "red" }} onClick={() => (goalDeleteHandler(goal._id, index))}><AiOutlineClose /></Button>
               </Card.Body>
@@ -126,14 +131,21 @@ const BookGoals = ({ _id }) => {
                 onChange={(e) => setEditGoalTitle(e.target.value)}
               />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-              <Form.Label>Goal Deadline</Form.Label>
+            <Form.Label>Goal Deadline</Form.Label>
+            <Form.Group className="mb-3" style={{display: "flex", justifyContent: "space-between"}} controlId="exampleForm.ControlTextarea1">
               <Form.Control
                 type="date"
                 placeholder="Enter goal deadline..."
                 required
                 value={editGDeadline}
                 onChange={(e) => setEditGoalDeadline(e.target.value)}
+              />
+              <Form.Control
+                type="time"
+                placeholder="Enter goal deadline..."
+                required
+                value={editGDeadlineTime}
+                onChange={(e) => setEditGoalDeadlineTime(e.target.value)}
               />
             </Form.Group>
 
@@ -162,14 +174,21 @@ const BookGoals = ({ _id }) => {
                 onChange={(e) => setGoalTitle(e.target.value)}
               />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-              <Form.Label>Goal Deadline</Form.Label>
+            <Form.Label>Goal Deadline</Form.Label>
+            <Form.Group className="mb-3" style={{display: "flex", justifyContent: "space-between"}} controlId="exampleForm.ControlTextarea1">
               <Form.Control
                 type="date"
                 placeholder="Enter goal deadline..."
                 required
                 value={goalDeadline}
                 onChange={(e) => setGoalDeadline(e.target.value)}
+              />
+              <Form.Control
+                type="time"
+                placeholder="Enter goal deadline..."
+                required
+                value={goalDeadlineTime}
+                onChange={(e) => setGoalDeadlineTime(e.target.value)}
               />
             </Form.Group>
             <Form.Check // prettier-ignore

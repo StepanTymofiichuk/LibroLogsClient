@@ -5,6 +5,7 @@ const initialState = {
         _id: 1,
         title: "Read part 1 of ⟪Solaris⟫",
         goalDeadline: "2023-10-20",
+        goalDeadlineTime: "10:00",
         isCompleted: true,
         bookId: 1,
         userId: 1
@@ -12,6 +13,7 @@ const initialState = {
         _id: 2,
         title: "Read part 2 of ⟪Solaris⟫",
         goalDeadline: "2023-10-25",
+        goalDeadlineTime: "16:30",
         isCompleted: false,
         bookId: 1,
         userId: 1
@@ -19,6 +21,7 @@ const initialState = {
         _id: 3,
         title: "Read part 3 of ⟪Solaris⟫",
         goalDeadline: "2023-10-30",
+        goalDeadlineTime: "17:40",
         isCompleted: false,
         bookId: 1,
         userId: 1
@@ -26,6 +29,7 @@ const initialState = {
         _id: 4,
         title: "Read part 1 of ⟪Shutter Island⟫",
         goalDeadline: "2023-10-25",
+        goalDeadlineTime: "12:30",
         isCompleted: false,
         bookId: 2,
         userId: 1
@@ -33,6 +37,7 @@ const initialState = {
         _id: 5,
         title: "Read part 2 of ⟪Shutter Island⟫",
         goalDeadline: "2023-10-30",
+        goalDeadlineTime: "15:00",
         isCompleted: false,
         bookId: 2,
         userId: 1
@@ -66,9 +71,11 @@ const goalSlice = createSlice({
             const goal = action.payload.goalIndex;
             const goalTitle = action.payload.title;
             const goalDeadline = action.payload.goalDeadline;
+            const goalDeadlineTime = action.payload.goalDeadlineTime;
             // console.log(book);
             state.userGoals[goal].title = goalTitle;
             state.userGoals[goal].goalDeadline = goalDeadline;
+            state.userGoals[goal].goalDeadlineTime = goalDeadlineTime;
         },
         cleaGoalsData: (state) => {
             state.userGoals = null;
