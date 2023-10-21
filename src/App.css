@@ -131,3 +131,8 @@ table {
     flex-wrap: wrap;
     padding: 0;
 }
+
+.chart {
+    display: flex;
+    justify-content: center;
+}

@@ -23,6 +23,22 @@ const initialState = {
         status: "In Progress",
         bookId: 1,
         userId: 1,
+        createdAt: "2023-10-25",
+        updatedAt: "2023-10-25",
+    }, {
+        _id: 4,
+        progress: 65,
+        status: "In Progress",
+        bookId: 1,
+        userId: 1,
+        createdAt: "2023-10-30",
+        updatedAt: "2023-10-30",
+    }, {
+        _id: 4,
+        progress: 50,
+        status: "In Progress",
+        bookId: 2,
+        userId: 1,
         createdAt: "2023-10-30",
         updatedAt: "2023-10-30",
     }]

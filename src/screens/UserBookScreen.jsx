@@ -4,6 +4,7 @@ import { useLocation, useParams } from 'react-router-dom';
 import BookGoals from '../components/BookGoals';
 import { Container } from 'react-bootstrap';
 import BookTracking from '../components/BookTracking';
+import ReadingChart from '../components/ReadingChart';
 import { Breadcrumb } from 'react-bootstrap';
 
 const UserBookScreen = () => {
@@ -22,6 +23,7 @@ const UserBookScreen = () => {
                     </Breadcrumb>
                 </div>
                 <h1>{location.state.title}</h1>
+                <ReadingChart _id={location.state._id} />
                 <BookTracking _id={location.state._id} status={location.state.status} pages={location.state.status}/>
                 <BookGoals _id={location.state._id} />
             </Container>
