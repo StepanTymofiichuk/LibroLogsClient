@@ -35,11 +35,11 @@ const BookTracking = ({ _id, pages, status }) => {
           </div>
         </div>
         <div>
-          <div style={{ fontSize: "24px", textAlign: "center" }}>{userSessions.filter(s => s._id === _id).length !== 0 ? userSessions[userSessions.length - 1].updatedAt : "-"}</div>
+          <div style={{ fontSize: "24px", textAlign: "center" }}>{userSessions.filter(s => s.bookId === _id).length !== 0 ? userSessions.filter(s => s.bookId === _id)[userSessions.filter(s => s.bookId === _id).length - 1].updatedAt : "-"}</div>
           <div style={{ fontSize: "12px" }}>Last Reading Session</div>
         </div>
         <div>
-          <div style={{ fontSize: "24px", textAlign: "center" }}>{userSessions.filter(s => s._id === _id).length !== 0 ? userSessions[userSessions.length - 1].progress : "0"}</div>
+          <div style={{ fontSize: "24px", textAlign: "center" }}>{userSessions.filter(s => s.bookId === _id).length !== 0 ? userSessions.filter(s => s.bookId === _id)[userSessions.filter(s => s.bookId === _id).length - 1].progress : "0"}</div>
           <div style={{ fontSize: "12px" }}>Pages In Last Session</div>
           <div>
             {userSessions.filter(s => s.bookId === _id).length !== 0 && status !== "Completed" ? <Button variant='link' size="sm" onClick={handleShow}><AiOutlinePlus /></Button> : null}

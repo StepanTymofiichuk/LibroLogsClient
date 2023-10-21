@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
 import BookGoals from '../components/BookGoals';
 import { Container } from 'react-bootstrap';
-import BookTracking from './BookTracking';
+import BookTracking from '../components/BookTracking';
 import { Breadcrumb } from 'react-bootstrap';
 
 const UserBookScreen = () => {

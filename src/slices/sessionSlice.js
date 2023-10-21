@@ -3,8 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     userSessions: [{
         _id: 1,
-        progress: 224,
-        status: "Completed",
+        progress: 174,
+        status: "In Progress",
         bookId: 1,
         userId: 1,
         createdAt: "2023-10-20",
@@ -17,6 +17,14 @@ const initialState = {
         userId: 1,
         createdAt: "2023-10-25",
         updatedAt: "2023-10-25",
+    }, {
+        _id: 3,
+        progress: 50,
+        status: "In Progress",
+        bookId: 1,
+        userId: 1,
+        createdAt: "2023-10-30",
+        updatedAt: "2023-10-30",
     }]
 }
 
