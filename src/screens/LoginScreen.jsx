@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 
 const LoginScreen = () => {
     const [email, setEmail] = useState('johndoe@email.com');
-    const [password, setPassword] = useState('1');
+    const [password, setPassword] = useState('qwer1234');
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -24,7 +24,7 @@ const LoginScreen = () => {
     const submitHandler = async (e) => {
         e.preventDefault();
         try {
-            dispatch(setCredentials({ email, password }));
+            dispatch(setCredentials({id: Math.floor(Math.random() * 11), name: email.split("@")[0], email, password }));
             navigate('/');
         } catch (err) {
             toast.error(err?.data?.message || err.error);

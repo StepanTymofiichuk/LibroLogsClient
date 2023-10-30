@@ -1,17 +1,28 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCredentials } from '../slices/authSlice';
+import { toast } from 'react-toastify';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import FormContainer from '../components/FormContainer';
 
 const RegisterScreen = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [name, setName] = useState('johndoe');
+  const [email, setEmail] = useState('johndoe@email.com');
+  const [password, setPassword] = useState('qwer1234');
+  const [confirmPassword, setConfirmPassword] = useState('qwer1234');
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log('submit');
+    try {
+      dispatch(setCredentials({id: Math.floor(Math.random() * 11), email, name }));
+      navigate('/');
+  } catch (err) {
+      toast.error(err?.data?.message || err.error);
+  }
   };
 
   return (
