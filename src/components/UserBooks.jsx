@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { updateBook, deleteBook } from '../slices/bookSlice';
+import { removeGoals } from '../slices/goalSlice';
+import { addReadingSession, removeSessions } from '../slices/sessionSlice';
 import { Form, Button } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import Modal from 'react-bootstrap/Modal';
@@ -24,13 +26,14 @@ const UserBooks = () => {
   const navigate = useNavigate();
 
   const handleClose = () => setShow(false);
-  const handleShow = ( index ) => {
+  const handleShow = (index) => {
     setShow(true);
     setBookIndex(index);
   };
 
   const { userBooks } = useSelector((state) => state.books);
   const { userGoals } = useSelector((state) => state.goals);
+  const { userSessions } = useSelector((state) => state.sessions);
 
   const BookType = ({ type }) => {
     if (type === "paper") {
@@ -43,6 +46,8 @@ const UserBooks = () => {
   const deleteHandler = (_id) => {
     try {
       dispatch(deleteBook(_id));
+      dispatch(removeGoals(_id));
+      dispatch(removeSessions(_id));
       toast.success("Success!");
     } catch (error) {
 
@@ -61,16 +66,25 @@ const UserBooks = () => {
         status = "In Progress";
         break;
     }
-     console.log(status);
+    console.log(status);
     try {
       dispatch(updateBook({ bookIndex, bookProgress, status }));
+      dispatch(addReadingSession({
+        _id: userSessions.length  + 1,
+        progress: bookProgress,
+        status: "In Progress",
+        bookId,
+        userId: 1,
+        createdAt: "2023-10-30",
+        updatedAt: "2023-10-30",
+      }))
       toast.success("Success!");
     } catch (error) {
-      
+
     }
   }
 
-  const userBookPage = (book) => navigate("/books/" + book._id, { state: { _id: book._id, title: book.title, pages: book.pages, status: book.status }});
+  const userBookPage = (book) => navigate("/books/" + book._id, { state: { _id: book._id, title: book.title, pages: book.pages, status: book.status } });
   return (
     <>
       <p className='books-qty'>Currently you have {userBooks.length} books</p>
@@ -88,9 +102,9 @@ const UserBooks = () => {
         </thead>
         <tbody className='book' >
           {
-           userBooks.length !== 0 ? userBooks.map((book, index) => (
+            userBooks.length !== 0 && userBooks.map((book, index) => (
               <tr key={book._id} className='book-row'>
-                <td style={{cursor: "pointer"}} onClick={() => (userBookPage(book))}>{book.title} {book.status === "New" && <Badge bg='success' pill>{book.status}</Badge>}</td>
+                <td style={{ cursor: "pointer" }} onClick={() => (userBookPage(book))}>{book.title} {book.status === "New" && <Badge bg='success' pill>{book.status}</Badge>}</td>
                 <td>{book.genre}</td>
                 <td>{book.pages}</td>
                 <td><ReadingProgress progress={book.bookProgress / book.pages * 100} /></td>
@@ -105,7 +119,7 @@ const UserBooks = () => {
                 }} disabled={book.status == "Completed" ? true : false} ><AiOutlineEdit /></Button></td>
                 <td><Button variant="link" size="sm" style={{ color: "red" }} onClick={() => (deleteHandler(book._id))} ><AiOutlineClose /></Button></td>
               </tr>
-            )) : <p>No books were found... Please add</p>
+            ))
           }
         </tbody>
       </Table>

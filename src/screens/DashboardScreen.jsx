@@ -50,7 +50,7 @@ const DashboardScreen = () => {
         <div className="float">
         <button className='plus' onClick={handleShow}><AiOutlinePlus /></button>
         </div>
-        {userBooks ? <UserBooks /> : <p>Currently you don't have books, please add</p>}
+        {userBooks.length !== 0 ? <UserBooks /> : <p>Currently you don't have books, please add</p>}
       </Container>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>

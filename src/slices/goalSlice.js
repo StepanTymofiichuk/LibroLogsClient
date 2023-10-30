@@ -61,6 +61,9 @@ const goalSlice = createSlice({
         deleteGoal: (state, action) => {
             state.userGoals = state.userGoals.filter(goal => goal._id !== action.payload);
         },
+        removeGoals: (state, action) => {
+            state.userGoals = state.userGoals.filter(goal => goal.bookId !== action.payload);
+        },
         updateGoal: (state, action) => {
             const goal = action.payload.goalIndex;
             const isCompleted = action.payload.isCompleted;
@@ -84,6 +87,6 @@ const goalSlice = createSlice({
     }
 });
 
-export const { setGoals, setUserGoals, addGoal, deleteGoal, updateGoal, updateOldGoal, cleaGoalsData } = goalSlice.actions;
+export const { setGoals, setUserGoals, addGoal, deleteGoal, removeGoals, updateGoal, updateOldGoal, cleaGoalsData } = goalSlice.actions;
 
 export default goalSlice.reducer;

@@ -53,7 +53,10 @@ const sessionSlice = createSlice({
             localStorage.setItem("userSessions", JSON.stringify(action.payload));
         },
         addReadingSession: (state, action) => {
-            state.userSessions.sessions.push(action.payload);
+            state.userSessions.push(action.payload);
+        },
+        removeSessions: (state, action) => {
+            state.userSessions = state.userSessions.filter(session => session.bookId !== action.payload);
         },
         updateReadingSession: (state, action) => {
             console.log(action.payload._id, action.payload.progress);
@@ -65,6 +68,6 @@ const sessionSlice = createSlice({
     }
 });
 
-export const { setReadingSession, addReadingSession, updateReadingSession, clearSessionsData } = sessionSlice.actions;
+export const { setReadingSession, addReadingSession, removeSessions, updateReadingSession, clearSessionsData } = sessionSlice.actions;
 
 export default sessionSlice.reducer;
