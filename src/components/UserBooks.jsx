@@ -14,6 +14,7 @@ import Badge from 'react-bootstrap/Badge';
 
 const UserBooks = () => {
 
+  const [search, setSearch] = useState("");
   const [show, setShow] = useState(false);
   const [bookProgress, setBookProgress] = useState(0);
   const [prevProgress, setPrevProgress] = useState(0);
@@ -70,7 +71,7 @@ const UserBooks = () => {
     try {
       dispatch(updateBook({ bookIndex, bookProgress, status }));
       dispatch(addReadingSession({
-        _id: userSessions.length  + 1,
+        _id: userSessions.length + 1,
         progress: bookProgress,
         status: "In Progress",
         bookId,
@@ -87,7 +88,14 @@ const UserBooks = () => {
   const userBookPage = (book) => navigate("/books/" + book._id, { state: { _id: book._id, title: book.title, pages: book.pages, status: book.status } });
   return (
     <>
-      <p className='books-qty'>Currently you have {userBooks.length} books</p>
+      <Form.Group className='my-2' controlId='search'>
+        <Form.Control
+          type='text'
+          placeholder='Search...'
+          value={search}
+          onChange={(e) => (setSearch(e.target.value))}
+        />
+      </Form.Group>
       <Table size='lr'>
         <thead>
           <tr>
@@ -102,7 +110,9 @@ const UserBooks = () => {
         </thead>
         <tbody className='book' >
           {
-            userBooks.length !== 0 && userBooks.map((book, index) => (
+            userBooks.length !== 0 && userBooks.filter((item) => {
+              return search.toLowerCase() === "" ? item : item.title.toLowerCase().includes(search) || item.genre.toLowerCase().includes(search)
+            }).map((book, index) => (
               <tr key={book._id} className='book-row'>
                 <td style={{ cursor: "pointer" }} onClick={() => (userBookPage(book))}>{book.title} {book.status === "New" && <Badge bg='success' pill>{book.status}</Badge>}</td>
                 <td>{book.genre}</td>
