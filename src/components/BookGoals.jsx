@@ -7,6 +7,7 @@ import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
 import { AiOutlineEdit, AiOutlineClose, AiOutlineCheck } from "react-icons/ai";
 import { toast } from "react-toastify";
+import JSConfetti from 'js-confetti'
 
 const BookGoals = ({ _id }) => {
 
@@ -24,6 +25,8 @@ const BookGoals = ({ _id }) => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const jsConfetti = new JSConfetti();
 
   const handleCloseEditGoalModal = () => setShowEditGoalModal(false);
   const handleShowEditGoalModal = (_id, title, deadline, deadlineTime) => {
@@ -57,6 +60,7 @@ const BookGoals = ({ _id }) => {
     try {
       dispatch(updateGoal({ goalIndex: _id - 1, isCompleted: true }));
       toast.success("Congratulations! Goal is Completed");
+      jsConfetti.addConfetti();
     } catch (err) {
       toast.error(err);
 
@@ -132,7 +136,7 @@ const BookGoals = ({ _id }) => {
               />
             </Form.Group>
             <Form.Label>Goal Deadline</Form.Label>
-            <Form.Group className="mb-3" style={{display: "flex", justifyContent: "space-between"}} controlId="exampleForm.ControlTextarea1">
+            <Form.Group className="mb-3" style={{ display: "flex", justifyContent: "space-between" }} controlId="exampleForm.ControlTextarea1">
               <Form.Control
                 type="date"
                 placeholder="Enter goal deadline..."
@@ -175,7 +179,7 @@ const BookGoals = ({ _id }) => {
               />
             </Form.Group>
             <Form.Label>Goal Deadline</Form.Label>
-            <Form.Group className="mb-3" style={{display: "flex", justifyContent: "space-between"}} controlId="exampleForm.ControlTextarea1">
+            <Form.Group className="mb-3" style={{ display: "flex", justifyContent: "space-between" }} controlId="exampleForm.ControlTextarea1">
               <Form.Control
                 type="date"
                 placeholder="Enter goal deadline..."
