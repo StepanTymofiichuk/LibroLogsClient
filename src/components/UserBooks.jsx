@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { updateBook, deleteBook } from '../slices/bookSlice';
+import { updateBook, deleteBook, setUserBookRating } from '../slices/bookSlice';
 import { removeGoals } from '../slices/goalSlice';
 import { addReadingSession, removeSessions } from '../slices/sessionSlice';
 import { Form, Button } from 'react-bootstrap';
@@ -9,6 +9,7 @@ import Table from 'react-bootstrap/Table';
 import Modal from 'react-bootstrap/Modal';
 import { toast } from "react-toastify";
 import ReadingProgress from './ReadingProgress';
+import StarRating from "./StarRating";
 import { AiOutlineEdit, AiOutlineClose, AiOutlineBook, AiOutlineMobile } from "react-icons/ai";
 import Badge from 'react-bootstrap/Badge';
 
@@ -18,10 +19,11 @@ const UserBooks = () => {
   const [show, setShow] = useState(false);
   const [bookProgress, setBookProgress] = useState(0);
   const [prevProgress, setPrevProgress] = useState(0);
-  const [bookId, setBookId] = useState("");
+  const [bookId, setBookId] = useState(0);
   const [bookTitle, setBookTitle] = useState("");
   const [bookIndex, setBookIndex] = useState(0);
   const [bookpages, setBBookPages] = useState(0);
+  const [bookRating, setBookRating] = useState(0);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -85,6 +87,14 @@ const UserBooks = () => {
     }
   }
 
+  const handleRatingChange = (newRating, bookIndex) => {
+    console.log("Selected rating:", newRating);
+    console.log("Book Index", bookIndex);
+    setBookRating(newRating);
+    dispatch(setUserBookRating({ newRating, bookIndex }));
+    toast.success("Book Rating Changed");
+  };
+
   const userBookPage = (book) => navigate("/books/" + book._id, { state: { _id: book._id, title: book.title, pages: book.pages, status: book.status } });
   return (
     <>
@@ -104,21 +114,23 @@ const UserBooks = () => {
             <th>Pages</th>
             <th>Progress</th>
             <th>Book Type</th>
+            <th>Rating</th>
             <th></th>
             <th></th>
           </tr>
         </thead>
-        <tbody className='book' >
           {
             userBooks.length !== 0 && userBooks.filter((item) => {
               return search.toLowerCase() === "" ? item : item.title.toLowerCase().includes(search) || item.genre.toLowerCase().includes(search)
             }).map((book, index) => (
-              <tr key={book._id} className='book-row'>
+              <tbody key={book._id} className='book'>
+              <tr className='book-row'>
                 <td style={{ cursor: "pointer" }} onClick={() => (userBookPage(book))}>{book.title} {book.status === "New" && <Badge bg='success' pill>{book.status}</Badge>}</td>
                 <td>{book.genre}</td>
                 <td>{book.pages}</td>
                 <td><ReadingProgress progress={book.bookProgress / book.pages * 100} /></td>
                 <td><BookType type={book.bookType} /></td>
+                <td><StarRating initialRating={book.rating} onRatingChange={handleRatingChange} bookIndex={index} /></td>
                 <td><Button variant="link" size="sm" style={{ color: "purple" }} onClick={() => {
                   handleShow(index),
                     setBookTitle(book.title),
@@ -129,9 +141,9 @@ const UserBooks = () => {
                 }} disabled={book.status == "Completed" ? true : false} ><AiOutlineEdit /></Button></td>
                 <td><Button variant="link" size="sm" style={{ color: "red" }} onClick={() => (deleteHandler(book._id))} ><AiOutlineClose /></Button></td>
               </tr>
+              </tbody>
             ))
           }
-        </tbody>
       </Table>
       <Modal show={show} onHide={handleClose}>
         <Modal.Body>

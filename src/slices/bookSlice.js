@@ -8,7 +8,8 @@ const initialState = {
         pages: 224,
         bookProgress: 224,
         bookType: "paper",
-        status: "Completed"
+        status: "Completed",
+        rating: 4
       }, {
         _id: 2,
         title: "D. Lehein ⟪Shutter Island⟫",
@@ -16,7 +17,8 @@ const initialState = {
         pages: 300,
         bookProgress: 68,
         bookType: "e-book",
-        status: "In Progress"
+        status: "In Progress",
+        rating: 3
       }, {
         _id: 3,
         title: "J. Steinback ⟪The Grapes of Wrath⟫",
@@ -24,7 +26,8 @@ const initialState = {
         pages: 450,
         bookProgress: 170,
         bookType: "paper",
-        status: "In Progress"
+        status: "In Progress",
+        rating: 1
       }],
 }
 
@@ -35,6 +38,10 @@ const bookSlice = createSlice({
         setBooks: (state, action) => {
             state.userBooks = action.payload;
             localStorage.setItem("userBooks", JSON.stringify(action.payload));
+        },
+        setUserBookRating: (state, action) => {
+            state.userBooks[action.payload.bookIndex].rating = action.payload.newRating;
+            // localStorage.setItem("userBooks", JSON.stringify(action.payload));
         },
         addBook: (state, action) => {
             state.userBooks.push(action.payload);
@@ -57,6 +64,6 @@ const bookSlice = createSlice({
     }
 });
 
-export const { setBooks, addBook, deleteBook, updateBook, clearBooksData } = bookSlice.actions;
+export const { setBooks, setUserBookRating, addBook, deleteBook, updateBook, clearBooksData } = bookSlice.actions;
 
 export default bookSlice.reducer;

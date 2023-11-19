@@ -136,3 +136,18 @@ table {
     display: flex;
     justify-content: center;
 }
+
+.star-rating {
+    
+  }
+  
+  .star-filled {
+    color: gold;
+    cursor: pointer;
+  }
+  
+  .star-empty {
+    color: #ccc;
+    cursor: pointer;
+  }
+  
