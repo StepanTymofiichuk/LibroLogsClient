@@ -12,7 +12,7 @@ const ProfileScreen = () => {
     const dispatch = useDispatch();
     const { userInfo } = useSelector((state) => state.auth);
     useEffect(() => {
-        setName(userInfo.name);
+        setName(userInfo.email.split("@")[0]);
         setEmail(userInfo.email);
     }, [userInfo.setName, userInfo.setEmail]);
     const submitHandler = async (e) => {
