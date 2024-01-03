@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Form } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
+import { AiOutlineCheck, AiOutlineMinus } from "react-icons/ai";
 
 const BookMatesList = () => {
 
@@ -23,7 +24,7 @@ const BookMatesList = () => {
 
     // console.log(userBookMates);
 
-    const userBookmatePage = (bookMate) => navigate(`/bookmates/${bookMate.name}`, { state: {_id: bookMate._id, name: bookMate.name }});
+    const userBookmatePage = (bookMate) => navigate(`/bookmates/${bookMate._id}`, { state: {_id: bookMate._id, name: bookMate.name }});
 
     return (
         <>
@@ -41,6 +42,9 @@ const BookMatesList = () => {
           <tr>
             <th>Name</th>
             <th>Email</th>
+            <th>Skype</th>
+            <th>Facebook</th>
+            <th>Instagram</th>
           </tr>
         </thead>
         <tbody className='book' >
@@ -50,7 +54,10 @@ const BookMatesList = () => {
               }).map((bookmate, index) => (
               <tr key={bookmate._id} className='book-row'>
                 <td style={{ cursor: "pointer" }} onClick={() => userBookmatePage(bookmate)}>{bookmate.name}</td>
-                <td>{bookmate.email}</td>
+                <td>{bookmate.email ? <AiOutlineCheck style={{color: "green"}}/> : <AiOutlineMinus style={{color: "red"}}/>}</td>
+                <td>{bookmate.skype ? <AiOutlineCheck style={{color: "green"}}/> : <AiOutlineMinus style={{color: "red"}} />}</td>
+                <td>{bookmate.facebook ? <AiOutlineCheck style={{color: "green"}}/> : <AiOutlineMinus style={{color: "red"}}/>}</td>
+                <td>{bookmate.instagram ? <AiOutlineCheck style={{color: "green"}}/> : <AiOutlineMinus style={{color: "red"}}/>}</td>
               </tr>
             ))
           }

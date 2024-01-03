@@ -5,7 +5,7 @@ import StarRating from "./StarRating";
 import { Form } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import Badge from 'react-bootstrap/Badge';
-import { AiOutlineEdit, AiOutlineClose, AiOutlineBook, AiOutlineMobile } from "react-icons/ai";
+import { AiOutlineEdit, AiOutlineClose, AiOutlineMail, AiOutlineSkype, AiOutlineFacebook, AiOutlineInstagram, AiOutlineBook, AiOutlineMobile } from "react-icons/ai";
 
 const BookMateBooks = ({ _id }) => {
 
@@ -22,11 +22,11 @@ const BookMateBooks = ({ _id }) => {
 
     const BookType = ({ type }) => {
         if (type === "paper") {
-          return <AiOutlineBook />
+            return <AiOutlineBook />
         } else if (type === "e-book") {
-          return <AiOutlineMobile />
+            return <AiOutlineMobile />
         }
-      }
+    }
 
     return (
         <>

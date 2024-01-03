@@ -19,7 +19,9 @@ import DashboardScreen from './screens/DashboardScreen.jsx';
 import ProfileScreen from './screens/ProfileScreen.jsx';
 import UserBookScreen from './screens/UserBookScreen.jsx';
 import BookMatesScreen from './screens/BookMatesScreen.jsx';
-import BookMateScreen from "./screens/BookMateScreen.jsx"
+import BookMateScreen from "./screens/BookMateScreen.jsx";
+import UserTimelineScreen from './screens/UserTimelineScreen.jsx';
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -33,6 +35,7 @@ const router = createBrowserRouter(
         <Route path="/books/:id" element={<UserBookScreen />}/>
         <Route path="/bookmates" element={<BookMatesScreen />}/>
         <Route path="/bookmates/:id" element={<BookMateScreen />}/>
+        <Route path="/timeline" element={<UserTimelineScreen />}/>
       </Route>
     </Route>
   )
